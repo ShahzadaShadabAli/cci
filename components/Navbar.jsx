@@ -17,7 +17,7 @@ function Navbar() {
   }, []);
 
   useEffect(() => {
-    if (isClient) {
+    if (typeof window !== 'undefined') {
       const handleScroll = () => {
         const currentScrollPos = window.scrollY;
 
@@ -42,7 +42,7 @@ function Navbar() {
   }, [scrollPos, isClient]);
 
   useEffect(() => {
-    if (isClient) {
+    if (typeof window !== 'undefined') {
       const handleScroll = () => {
         setScroll(window.scrollY);
         console.log(window.scrollY); // Logs the scroll position
