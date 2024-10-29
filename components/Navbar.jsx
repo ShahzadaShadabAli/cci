@@ -12,8 +12,12 @@ function Navbar() {
   const [toggle, setToggle] = useState(false)
 
   useEffect(() => {
-    // Check if window is defined (i.e., the code is running on the client side)
-    if (typeof window !== 'undefined') {
+    // Set isClient to true after the component mounts to indicate that we are on the client side
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (isClient) {
       const handleScroll = () => {
         const currentScrollPos = window.scrollY;
 
@@ -35,10 +39,10 @@ function Navbar() {
         window.removeEventListener('scroll', handleScroll);
       };
     }
-  }, [scrollPos]);
+  }, [scrollPos, isClient]);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (isClient) {
       const handleScroll = () => {
         setScroll(window.scrollY);
         console.log(window.scrollY); // Logs the scroll position
@@ -51,7 +55,8 @@ function Navbar() {
         window.removeEventListener('scroll', handleScroll);
       };
     }
-  }, []);
+  }, [isClient]);
+
   return (
     <nav
     initial={{ opacity: 0, y: -100 }} // Initial hidden state
