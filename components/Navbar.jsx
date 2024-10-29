@@ -12,40 +12,45 @@ function Navbar() {
   const [toggle, setToggle] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => {
-      let currentScrollPos = window.scrollY;
+    // Check if window is defined (i.e., the code is running on the client side)
+    if (typeof window !== 'undefined') {
+      const handleScroll = () => {
+        const currentScrollPos = window.scrollY;
 
-      // If scrolling down, hide the navbar (set isVisible to false)
-      // If scrolling up, show the navbar (set isVisible to true)
-      if (currentScrollPos > scrollPos) {
-        setIsVisible(false);
-      } else {
-        setIsVisible(true);
-      }
+        // If scrolling down, hide the navbar (set isVisible to false)
+        // If scrolling up, show the navbar (set isVisible to true)
+        if (currentScrollPos > scrollPos) {
+          setIsVisible(false);
+        } else {
+          setIsVisible(true);
+        }
 
-      // Update the scroll position
-      setScrollPos(currentScrollPos);
-    };
+        // Update the scroll position
+        setScrollPos(currentScrollPos);
+      };
 
-    window.addEventListener('scroll', handleScroll);
+      window.addEventListener('scroll', handleScroll);
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }
   }, [scrollPos]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScroll(window.scrollY);
-      console.log(window.scrollY); // Logs the scroll position
-    };
+    if (typeof window !== 'undefined') {
+      const handleScroll = () => {
+        setScroll(window.scrollY);
+        console.log(window.scrollY); // Logs the scroll position
+      };
 
-    window.addEventListener('scroll', handleScroll);
+      window.addEventListener('scroll', handleScroll);
 
-    // Clean up the event listener on component unmount
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+      // Clean up the event listener on component unmount
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }
   }, []);
   return (
     <nav
