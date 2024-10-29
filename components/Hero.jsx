@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useRef } from 'react'
 import Navbar from './Navbar'
 import BentoGrid from './BentoGrid'

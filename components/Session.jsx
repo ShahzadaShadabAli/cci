@@ -1,7 +1,7 @@
+'use client'
 import React from 'react'
 import { Card } from './Card'
 import { motion } from 'framer-motion'
-
 const Session = () => {
   return (
     <div id='Sessions' data-scroll data-scroll-section data-scroll-speed="-0.2">

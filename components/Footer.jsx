@@ -1,7 +1,7 @@
+'use client'
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Form from "./Form";
-
 const Footer = () => {
     const ref = useRef(null)
     const isInView = useInView(ref)
