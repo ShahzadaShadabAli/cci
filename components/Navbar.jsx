@@ -6,8 +6,6 @@ import { motion, AnimatePresence } from "framer-motion";
 
 function Navbar() {
   const [scroll, setScroll] = useState(0)
-  const [scrollPos, setScrollPos] = useState(0);
-  const [isVisible, setIsVisible] = useState(true);
 
   const [toggle, setToggle] = useState(false)
 
@@ -16,58 +14,10 @@ function Navbar() {
     setIsClient(true);
   }, []);
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const handleScroll = () => {
-        const currentScrollPos = window.scrollY;
-
-        // If scrolling down, hide the navbar (set isVisible to false)
-        // If scrolling up, show the navbar (set isVisible to true)
-        if (currentScrollPos > scrollPos) {
-          setIsVisible(false);
-        } else {
-          setIsVisible(true);
-        }
-
-        // Update the scroll position
-        setScrollPos(currentScrollPos);
-      };
-
-      window.addEventListener('scroll', handleScroll);
-
-      return () => {
-        window.removeEventListener('scroll', handleScroll);
-      };
-    }
-  }, [scrollPos, isClient]);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const handleScroll = () => {
-        setScroll(window.scrollY);
-        console.log(window.scrollY); // Logs the scroll position
-      };
-
-      window.addEventListener('scroll', handleScroll);
-
-      // Clean up the event listener on component unmount
-      return () => {
-        window.removeEventListener('scroll', handleScroll);
-      };
-    }
-  }, [isClient]);
 
   return (
     <nav
-    initial={{ opacity: 0, y: -100 }} // Initial hidden state
-      animate={{
-        opacity: isVisible ? 1 : 0,
-        y: isVisible ? 0 : -100,
-        rotate: isVisible ? [0, 10, -10, 0] : 0,
-        scale: isVisible ? [0.5, 1.2, 0.8, 1] : 1,
-      }}
-    transition={{ duration: 1, ease: 'easeInOut' }} // Smooth transition
-     className={`w-full z-[999] fixed text-[--primary] px-20 py-4 flex justify-between items-center ${isVisible ? 'slide-down' : 'slide-up'}
+     className={`w-full z-[999] fixed text-[--primary] px-20 py-4 flex justify-between items-center
     ${scroll > 400 ? "bg-black bg-opacity-10 backdrop-filter backdrop-blur-lg border-none p-6" : ""} `}>
       <div className="logo font-dongle text-3xl font-bold">
       <h1>CCI PC</h1>
