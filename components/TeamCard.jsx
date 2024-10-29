@@ -9,22 +9,7 @@ export function TeamCard({cards}) {
   const ref = useRef(null);
   const id = useId();
 
-  useEffect(() => {
-    function onKeyDown(event) {
-      if (event.key === "Escape") {
-        setActive(false);
-      }
-    }
 
-    if (active && typeof active === "object") {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [active]);
 
   useOutsideClick(ref, () => setActive(null));
 

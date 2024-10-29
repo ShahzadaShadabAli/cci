@@ -5,22 +5,7 @@ import { motion, useInView } from "framer-motion";
 const Mission = () => {
   const [rotation, setRotation] = useState(0);
   const ref = useRef(null)
-  const isInView = useInView(ref, {
-    amount: "all"
-  })
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      setRotation(scrollPosition);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+ 
 
   return (
     <div id="Mission" ref={ref} className="flex  max-lg:mt-96 mt-10 bg-[--primary] w-full z-40 relative pb-20 lg:py-32 rounded-tl-3xl rounded-tr-3xl">

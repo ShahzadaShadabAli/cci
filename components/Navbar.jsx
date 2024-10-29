@@ -5,20 +5,14 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { motion, AnimatePresence } from "framer-motion";
 
 function Navbar() {
-  const [scroll, setScroll] = useState(0)
-
   const [toggle, setToggle] = useState(false)
 
-  useEffect(() => {
-    // Set isClient to true after the component mounts to indicate that we are on the client side
-    setIsClient(true);
-  }, []);
 
 
   return (
     <nav
      className={`w-full z-[999] fixed text-[--primary] px-20 py-4 flex justify-between items-center
-    ${scroll > 400 ? "bg-black bg-opacity-10 backdrop-filter backdrop-blur-lg border-none p-6" : ""} `}>
+    ${"border-none p-6"} `}>
       <div className="logo font-dongle text-3xl font-bold">
       <h1>CCI PC</h1>
       </div>
