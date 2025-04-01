@@ -20,27 +20,27 @@ const Footer = () => {
       >
         {/* Repeat the text within a single div for continuous scrolling */}
         <h1 className="font-dongle text-[11vw] mb-10 py-20 max-lg:py-2 text-[--secondary] flex items-center font-bold border-b leading-[5rem] border-[--primary]">
-          Got 
+          Become 
           <div className="w-10 h-10 mx-7 rounded-full bg-[--secondary]" />
-          Some 
+          A 
           <div className="w-10 h-10 mx-7 rounded-full bg-[--secondary]" />
-          Queries? 
+          Member
           <div className="w-10 h-10 mx-7 rounded-full bg-[--secondary]" />
         </h1>
         <h1 className="font-dongle text-[11vw] mb-10 py-20 max-lg:py-2 text-[--secondary] flex items-center font-bold border-b leading-[5rem] border-[--primary]">
-          Got 
+          Become 
           <div className="w-10 h-10 mx-7 rounded-full bg-[--secondary]" />
-          Some 
+          A 
           <div className="w-10 h-10 mx-7 rounded-full bg-[--secondary]" />
-          Queries? 
+          Member
           <div className="w-10 h-10 mx-7 rounded-full bg-[--secondary]" />
         </h1>
         <h1 className="font-dongle text-[11vw] lg:hidden mb-10 py-20 max-lg:py-2 text-[--secondary] flex items-center font-bold border-b leading-[5rem] border-[--primary]">
-          Got 
+          Become 
           <div className="w-10 h-10 mx-7 rounded-full bg-[--secondary]" />
-          Some 
+          A 
           <div className="w-10 h-10 mx-7 rounded-full bg-[--secondary]" />
-          Queries? 
+          Member
           <div className="w-10 h-10 mx-7 rounded-full bg-[--secondary]" />
         </h1>
       </motion.div>
@@ -72,7 +72,7 @@ const Footer = () => {
           CLUB
         </h1>
       </div></div>
-        <div className="lg:w-1/2 w-full">
+        <div className="lg:w-1/2">
         <Form />
         </div>
       </div>

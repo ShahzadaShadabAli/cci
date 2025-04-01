@@ -48,11 +48,9 @@ const Mission = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1 }}
           >
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem
-            delectus quae facere nesciunt id maiores perferendis sit numquam ea
-            molestiae natus, laudantium ipsum modi explicabo? Quod veritatis ab
-            illum excepturi!
-          </motion.p>
+Who wants to spend their life writing “Hello, World!”? Not us.
+
+Welcome to CCI Programming Club, where we turn crazy ideas into reality and laugh in the face of boring assignments. No dry lectures, no pointless memorization—just real coding, wild projects, and pushing tech to its limits. Build games, break AI, and maybe even create something that melts your laptop (oops).          </motion.p>
         </div>
         <motion.img
           src="/target.png"

@@ -1,11 +1,13 @@
 import localFont from "next/font/local";
 import "./globals.css";
+import FeedbackButton from "./components/FeedbackButton";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
   weight: "100 900",
 });
+
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
@@ -21,12 +23,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-      <link rel="icon" type="" href="/10001.jpg" style={{borderRadius: "50%"}} />
+        <link rel="icon" type="" href="/10001.jpg" style={{borderRadius: "50%"}} />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
+        <FeedbackButton />
       </body>
     </html>
   );

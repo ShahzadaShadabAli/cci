@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { TeamCard } from './TeamCard';
 import members from '@/data/team.json';
 import { motion } from 'framer-motion';
@@ -18,6 +18,26 @@ const fadeInVariant = {
 };
 
 const Team = () => {
+  const [isLoading, setIsLoading] = useState(false)
+  const [members, setMembers] = useState(null)
+
+    const fetchMembers = async () =>{
+        setIsLoading(true)
+        try {
+            const response = await fetch("/api/member", {method: "GET"})
+            const data = await response.json()
+            setMembers(data)
+        } catch (error) {
+            console.log(error)
+        } finally { 
+            setIsLoading(false)
+        }
+    }
+  
+  useEffect(() => {
+    fetchMembers()
+  }, [])
+
   return (
     <motion.div
     id='Team'
@@ -46,7 +66,8 @@ const Team = () => {
           </motion.h1>
         </div>
         <div className="w-1/2">
-          <TeamCard cards={members.filter(m => m.description !== 'Member')} />
+          {members && <TeamCard cards={members.filter(m => m.isMember !== true)} />}
+          {!members && <span className='w-20 h-20 text-black animate-spin'></span> }
         </div>
       </motion.div>
 
@@ -62,7 +83,7 @@ const Team = () => {
           </motion.h1>
         </div>
         <div className="w-1/2">
-          <TeamCard cards={members.filter(m => m.description === 'Member')} />
+          {members && <TeamCard cards={members.filter(m => m.isMember === true)} />}
         </div>
       </motion.div>
     </motion.div>

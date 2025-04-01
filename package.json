@@ -11,15 +11,21 @@
   "dependencies": {
     "@radix-ui/react-label": "^2.1.0",
     "clsx": "^2.1.1",
+    "flowbite": "^3.1.2",
     "framer-motion": "^11.11.9",
+    "js-cookie": "^3.0.5",
     "locomotive-scroll": "^5.0.0-beta.21",
+    "mongoose": "^8.12.2",
     "next": "14.2.15",
+    "nodemailer": "^6.10.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-hot-toast": "^2.5.2",
     "react-icons": "^5.3.0",
     "tailwind-merge": "^2.5.4"
   },
   "devDependencies": {
+    "daisyui": "^5.0.9",
     "postcss": "^8",
     "tailwindcss": "^3.4.1"
   }

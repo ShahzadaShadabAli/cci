@@ -1,8 +1,36 @@
 'use client'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Card } from './Card'
 import { motion } from 'framer-motion'
+
 const Session = () => {
+  const [meetings, setMeetings] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchMeetings = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/meeting');
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch meetings');
+        }
+        
+        const data = await response.json();
+        setMeetings(data);
+      } catch (err) {
+        console.error('Error fetching meetings:', err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMeetings();
+  }, []);
+
   return (
     <div id='Sessions' data-scroll data-scroll-section data-scroll-speed="-0.2">
         <div className='py-32 bg-[--secondary] rounded-bl-3xl rounded-br-3xl'>
@@ -39,10 +67,9 @@ const Session = () => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 1 }}
       >
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem
-        delectus quae facere nesciunt id maiores perferendis sit numquam ea
-        molestiae natus, laudantium ipsum modi explicabo? Quod veritatis ab
-        illum excepturi!
+        Explore our past meetings and sessions. Each gathering is an opportunity to learn,
+        connect, and grow together. Click on any session to learn more about what we discussed
+        and view the gallery of memories we created.
       </motion.p>
      </div>
      <motion.img
@@ -56,9 +83,29 @@ const Session = () => {
       />
   </div>
         <div className="mt-16 px-32 max-md:px-4 cursor-pointer flex justify-center gap-10 flex-wrap">
-            <Card />
-            <Card />
-            <Card />
+            {loading ? (
+              <div className="flex justify-center items-center w-full py-20">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[--primary]"></div>
+              </div>
+            ) : error ? (
+              <div className="text-red-500 font-custom text-center w-full py-10">
+                Error loading meetings: {error}
+              </div>
+            ) : meetings.length === 0 ? (
+              <div className="text-[--primary] font-custom text-center w-full py-10">
+                No meetings found. Check back later!
+              </div>
+            ) : (
+              meetings.map((meeting) => (
+                <Card 
+                  key={meeting._id}
+                  id={meeting._id}
+                  title={meeting.title}
+                  description={meeting.desc}
+                  thumbnail={meeting.thumbnail}
+                />
+              ))
+            )}
         </div>
     </div>
     </div>
