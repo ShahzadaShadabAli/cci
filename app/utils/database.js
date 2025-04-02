@@ -1,13 +1,14 @@
 import mongoose from "mongoose";
 
 // Create a cached connection object
-const cached = {
-  conn: null,
-  promise: null,
-};
+const cached = global.mongoose || { conn: null, promise: null };
+
+if (!global.mongoose) {
+  global.mongoose = { conn: null, promise: null };
+}
 
 export const connectDB = async () => {
-  // If we already have a connection, return it
+  // If we already have a connection in the global scope, return it
   if (cached.conn) {
     console.log("Using existing database connection");
     return cached.conn;
@@ -26,16 +27,22 @@ export const connectDB = async () => {
     dbName: "cci-programming-club",
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    // Add these options to ensure fresh data
-    readPreference: 'primary',
-    readConcern: { level: 'majority' },
+    bufferCommands: false, // Disable mongoose buffering
+    maxPoolSize: 10, // Maintain up to 10 socket connections
+    serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5 seconds
+    socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
+    family: 4, // Use IPv4, skip trying IPv6
   });
 
   try {
     cached.conn = await cached.promise;
     console.log("Database connected successfully");
     
-    // Add event listeners to handle connection issues
+    // Connection event handlers
+    mongoose.connection.on('connected', () => {
+      console.log('MongoDB connected');
+    });
+
     mongoose.connection.on('disconnected', () => {
       console.log('MongoDB disconnected');
       cached.conn = null;
@@ -47,25 +54,28 @@ export const connectDB = async () => {
       cached.conn = null;
       cached.promise = null;
     });
+
+    mongoose.connection.on('reconnected', () => {
+      console.log('MongoDB reconnected');
+    });
     
     return cached.conn;
   } catch (error) {
     console.error("Database connection error:", error);
-    cached.promise = null; // Reset the promise so we can try again
+    cached.promise = null;
     throw error;
   }
 };
 
-// Helper function to force a fresh database query
-export const forceFreshQuery = async (model, query = {}, options = {}) => {
+// Function to ensure fresh data
+export const getFreshData = async (model, query = {}, options = {}) => {
   await connectDB();
   
-  // Add options to ensure fresh data
-  const queryOptions = {
+  return model.find(query, null, {
     ...options,
-    lean: true, // Return plain JavaScript objects instead of Mongoose documents
-    cache: false, 
-  };
-  
-  return model.find(query, null, queryOptions);
+    lean: true,
+    readPreference: 'primary',
+    readConcern: { level: 'majority' },
+    maxTimeMS: 30000, // 30 second timeout
+  });
 };
