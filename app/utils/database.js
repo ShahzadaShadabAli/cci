@@ -42,4 +42,8 @@ export const getLiveData = async (model, query = {}, options = {}) => {
     lean: true,
     maxTimeMS: 5000,
   });
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> 37fd084a31e93fe24f313101b68e2061a36e921a
