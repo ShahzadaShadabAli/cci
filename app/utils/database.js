@@ -26,15 +26,46 @@ export const connectDB = async () => {
     dbName: "cci-programming-club",
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    // Add these options to ensure fresh data
+    readPreference: 'primary',
+    readConcern: { level: 'majority' },
   });
 
   try {
     cached.conn = await cached.promise;
     console.log("Database connected successfully");
+    
+    // Add event listeners to handle connection issues
+    mongoose.connection.on('disconnected', () => {
+      console.log('MongoDB disconnected');
+      cached.conn = null;
+      cached.promise = null;
+    });
+
+    mongoose.connection.on('error', (err) => {
+      console.error('MongoDB connection error:', err);
+      cached.conn = null;
+      cached.promise = null;
+    });
+    
     return cached.conn;
   } catch (error) {
     console.error("Database connection error:", error);
     cached.promise = null; // Reset the promise so we can try again
     throw error;
   }
+};
+
+// Helper function to force a fresh database query
+export const forceFreshQuery = async (model, query = {}, options = {}) => {
+  await connectDB();
+  
+  // Add options to ensure fresh data
+  const queryOptions = {
+    ...options,
+    lean: true, // Return plain JavaScript objects instead of Mongoose documents
+    cache: false, 
+  };
+  
+  return model.find(query, null, queryOptions);
 };
