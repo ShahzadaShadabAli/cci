@@ -47,7 +47,12 @@ const page = () => {
     const fetchConfirmations = async () => {
         setIsLoading(true)
         try {
-            const response = await fetch("/api/confirmation/get", {method: "GET"})
+            const response = await fetch("/api/confirmation/get", {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
             const data = await response.json()
             setConfirmations(data)
         } catch (error) {
