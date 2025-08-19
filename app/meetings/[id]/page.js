@@ -21,7 +21,7 @@ export default function MeetingDetails() {
     const fetchMeeting = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`/api/meeting/${id}`);
+        const response = await fetch(`/api/meeting/${id}`, { cache: 'no-store' });
         
         if (!response.ok) {
           throw new Error('Failed to fetch meeting details');

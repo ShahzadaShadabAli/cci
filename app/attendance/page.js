@@ -14,7 +14,7 @@ const AttendancePage = () => {
         const fetchActiveMeeting = async () => {
             try {
                 setFetchingMeeting(true);
-                const response = await fetch('/api/meeting/active');
+                const response = await fetch('/api/meeting/active', { cache: 'no-store' });
                 
                 if (!response.ok) {
                     throw new Error('Failed to fetch active meeting');

@@ -24,7 +24,7 @@ const Team = () => {
     const fetchMembers = async () =>{
         setIsLoading(true)
         try {
-            const response = await fetch("/api/member", {method: "GET"})
+            const response = await fetch("/api/member", {method: "GET", cache: 'no-store'})
             const data = await response.json()
             setMembers(data)
         } catch (error) {

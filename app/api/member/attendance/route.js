@@ -4,6 +4,9 @@ import Member from "@/models/member";
 import Meeting from "@/models/meeting";
 import mongoose from "mongoose";
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function POST(req) {
   try {
     // Connect to database

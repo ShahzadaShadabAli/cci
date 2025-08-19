@@ -3,6 +3,9 @@ import Feedback from "@/models/feedback";
 import Member from "@/models/member";
 import { NextResponse } from "next/server";
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function POST(req) {
     try {
         await connectDB();
@@ -56,7 +59,13 @@ export async function GET() {
             .populate('member', 'name avatar') // Only get name and avatar from member
             .sort({ createdAt: -1 }); // Sort by latest first
         
-        return NextResponse.json(feedbacks);
+        return new NextResponse(JSON.stringify(feedbacks), {
+            status: 200,
+            headers: {
+                'Content-Type': 'application/json',
+                'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate'
+            }
+        });
     } catch (error) {
         return NextResponse.json(
             { message: "Failed to fetch feedbacks" },

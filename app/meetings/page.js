@@ -133,7 +133,7 @@ const MeetingsForm = () => {
             setDesc('');
             
             // Refresh meetings list to include the new meeting
-            const meetingsResponse = await fetch('/api/meeting');
+            const meetingsResponse = await fetch('/api/meeting', { cache: 'no-store' });
             const meetingsData = await meetingsResponse.json();
             setExistingMeetings(meetingsData || []);
             
@@ -311,7 +311,7 @@ const MeetingsForm = () => {
             if (isAuthenticated) {
                 try {
                     setFetchingMeetings(true);
-                    const response = await fetch('/api/meeting');
+                    const response = await fetch('/api/meeting', { cache: 'no-store' });
                     
                     if (!response.ok) {
                         throw new Error('Failed to fetch meetings');

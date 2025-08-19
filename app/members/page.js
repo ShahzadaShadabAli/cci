@@ -30,7 +30,7 @@ const page = () => {
     useEffect(() => {
         const fetchMembers = async () => {
             setIsLoading(true)
-            const response = await fetch('/api/member')
+            const response = await fetch('/api/member', { cache: 'no-store' })
             const data = await response.json()
             setMembers(data)
             setIsLoading(false)
@@ -44,7 +44,7 @@ const page = () => {
         const fetchMeetings = async () => {
             if (meetingsTabActive && isAuthenticated) {
                 try {
-                    const response = await fetch('/api/meeting')
+                    const response = await fetch('/api/meeting', { cache: 'no-store' })
                     const data = await response.json()
                     setMeetings(data)
                 } catch (error) {

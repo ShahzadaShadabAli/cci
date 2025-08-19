@@ -4,6 +4,9 @@ import Meeting from "@/models/meeting";
 import { writeFile } from 'fs/promises';
 import path from 'path';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 // Function to save file to the public/uploads folder
 async function saveFile(file) {
   try {

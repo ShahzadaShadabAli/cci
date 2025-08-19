@@ -38,7 +38,7 @@ export default function Feedback() {
       if (!isAuthenticated) return;
       
       try {
-        const response = await fetch('/api/feedback');
+        const response = await fetch('/api/feedback', { cache: 'no-store' });
         const data = await response.json();
         setFeedbacks(data);
       } catch (error) {

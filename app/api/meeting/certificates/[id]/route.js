@@ -5,6 +5,9 @@ import nodemailer from 'nodemailer';
 import path from 'path';
 import fs from 'fs/promises';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 // Function to send email with certificate
 async function sendCertificateEmail(member, meeting) {
   // Create a nodemailer transporter
@@ -107,10 +110,16 @@ export async function POST(req, { params }) {
     meeting.certificates = true;
     await meeting.save();
     
-    // Return success response
-    return NextResponse.json({
+    // Return success response with no-store headers
+    return new NextResponse(JSON.stringify({
       message: `Certificates sent to ${successfulEmails} out of ${meeting.membersParticipated.length} participants`,
       success: true
+    }), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate'
+      }
     });
     
   } catch (error) {

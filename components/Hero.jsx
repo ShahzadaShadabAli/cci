@@ -21,12 +21,12 @@ const Hero = () => {
     const fetchCounts = async () => {
       try {
         // Fetch members count
-        const membersResponse = await fetch('/api/member');
+        const membersResponse = await fetch('/api/member', { cache: 'no-store' });
         const membersData = await membersResponse.json();
         const membersCount = membersData.length;
 
         // Fetch meetings count
-        const meetingsResponse = await fetch('/api/meeting');
+        const meetingsResponse = await fetch('/api/meeting', { cache: 'no-store' });
         const meetingsData = await meetingsResponse.json();
         const meetingsCount = meetingsData.length;
 

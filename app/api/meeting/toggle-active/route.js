@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/app/utils/database";
 import Meeting from "@/models/meeting";
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function POST(req) {
   try {
     // Connect to database

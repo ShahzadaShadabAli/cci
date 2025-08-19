@@ -51,7 +51,8 @@ const page = () => {
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json'
-                }
+                },
+                cache: 'no-store'
             })
             const data = await response.json()
             setConfirmations(data)
