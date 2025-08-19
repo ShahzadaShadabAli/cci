@@ -7,8 +7,9 @@ export const connectDB = async () => {
       // If already connected, return the active connection
       return mongoose.connection;
     }
-
+    
     console.log("Establishing new database connection");
+    
     await mongoose.connect(process.env.MONGODB_URI, {
       dbName: "cci-programming-club",
       useNewUrlParser: true,
@@ -18,11 +19,11 @@ export const connectDB = async () => {
       serverSelectionTimeoutMS: 3000,
       socketTimeoutMS: 30000,
     });
-
+    
     mongoose.connection.on('error', (err) => {
       console.error('MongoDB connection error:', err);
     });
-
+    
     return mongoose.connection;
   } catch (error) {
     console.error("Database connection error:", error);
@@ -42,4 +43,4 @@ export const getLiveData = async (model, query = {}, options = {}) => {
     lean: true,
     maxTimeMS: 5000,
   });
-
+};
