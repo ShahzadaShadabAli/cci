@@ -85,6 +85,7 @@ const page = () => {
                     stage: card.stage, 
                     avatar: card.avatar,
                     email: card.email,
+                    phone: card.phone,
                 })
             })
             const res2 = await fetch(`/api/confirmation/${card._id}`, {method: "DELETE"})
