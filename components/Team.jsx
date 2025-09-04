@@ -66,8 +66,35 @@ const Team = () => {
           </motion.h1>
         </div>
         <div className="w-1/2">
-          {members && <TeamCard cards={members.filter(m => m.isMember !== true)} />}
+          {members && (
+            <TeamCard 
+              cards={members.filter(m => {
+                const t = (m.type || '').toLowerCase();
+                return t ? t === 'president' : m.isMember !== true;
+              })} 
+            />
+          )}
           {!members && <span className='w-20 h-20 text-black animate-spin'></span> }
+        </div>
+      </motion.div>
+
+      <motion.div
+        className="flex border-b max-lg:flex-col max-lg:items-center border-[--primary] py-4"
+        variants={fadeInVariant}
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <div className="w-1/2 pl-7">
+          <motion.h1 className="font-custom text-lg" variants={fadeInVariant}>
+            Deputy Presidents:
+          </motion.h1>
+        </div>
+        <div className="w-1/2">
+          {members && (
+            <TeamCard 
+              cards={members.filter(m => (m.type || '').toLowerCase() === 'vpresident')} 
+            />
+          )}
         </div>
       </motion.div>
 
@@ -83,7 +110,14 @@ const Team = () => {
           </motion.h1>
         </div>
         <div className="w-1/2">
-          {members && <TeamCard cards={members.filter(m => m.isMember === true)} />}
+          {members && (
+            <TeamCard 
+              cards={members.filter(m => {
+                const t = (m.type || '').toLowerCase();
+                return t ? t === 'member' : m.isMember === true;
+              })} 
+            />
+          )}
         </div>
       </motion.div>
     </motion.div>
