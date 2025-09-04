@@ -6,6 +6,7 @@ const Form = () => {
   const [stage, setStage] = useState(null)
   const [avatar, setAvatar] = useState(null)
   const [email, setEmail] = useState(null)
+  const [phone, setPhone] = useState(null)
   const [err, setErr] = useState(null)
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -19,7 +20,7 @@ const Form = () => {
   const submitForm = async (e) => {
     e.preventDefault()
     setLoading(true)
-    if (name && stage && avatar && email){
+    if (name && stage && avatar && email && phone){
       console.log(avatar)
       try {
         const response = await fetch("/api/confirmation", {method: 'POST', body: JSON.stringify(
@@ -27,7 +28,8 @@ const Form = () => {
                 name,
                 stage, 
                 avatar,
-                email
+                email,
+                phone
             }
         )})
         setSuccess(true)
@@ -35,6 +37,7 @@ const Form = () => {
         setStage(null)
         setAvatar(null)
         setEmail(null)
+        setPhone(null)
       } catch (error) {
           console.log(error.message)
       } finally {
@@ -63,8 +66,11 @@ const Form = () => {
       <option value="A2">A2</option>
     </select>
     </div>
+    <div className="flex gap-5 w-full">
     <input type="email" value={email || ''} onInput={(e) => setEmail(e.target.value)} placeholder="Email Address" name="email" className='w-full input' />
-    {name && stage && email && <div className="w-full img-box mb-10 h-32">
+    <input type="tel" value={phone || ''} onInput={(e) => setPhone(e.target.value)} placeholder="Phone Number" name="phone" className='w-full input' />
+    </div>
+    {name && stage && email && phone && <div className="w-full img-box mb-10 h-32">
       <h3 className='font-weight-700'>Select Your Avatar</h3>
      <div className="grid grid-cols-7 gap-y-3 max-sm:grid-cols-4 w-full">
       {avatars.map(e => (

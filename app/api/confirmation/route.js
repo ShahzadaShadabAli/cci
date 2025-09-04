@@ -2,8 +2,8 @@ import Confirmation from "@/models/confirmation";
 import { connectDB } from "@/app/utils/database";
 
 export const POST = async (req) => {
-    const {name, stage, avatar, email} = await req.json()
-    console.log(name, stage, avatar, email)
+    const {name, stage, avatar, email, phone} = await req.json()
+    console.log(name, stage, avatar, email, phone)
     try {
         await connectDB()
         const newConfirmation = new Confirmation({
@@ -11,6 +11,7 @@ export const POST = async (req) => {
            avatar,
            stage,
            email,
+           phone,
         })
         await newConfirmation.save()
         console.log(newConfirmation)
