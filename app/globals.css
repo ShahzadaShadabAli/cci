@@ -92,12 +92,12 @@ select {
 }
 
 .form {
-  --background: #ffd500;
+  --background: #1f2837;
   --input-focus: var(--primary);
-  --font-color: #323232;
+  --font-color: #4f76f6;
   --font-color-sub: #666;
   --bg-color: #fff;
-  --main-color: #323232;
+  --main-color: #4f76f6;
   padding: 20px;
   background: var(--background);
   display: flex;
