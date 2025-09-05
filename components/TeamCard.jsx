@@ -176,59 +176,59 @@ export function TeamCard({cards, onClickAction = null, toDelete = null, confirma
           layoutId={`card-${card.name}-${id}`}
           className={`p-4 flex flex-row justify-between items-center hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-xl cursor-pointer w-full mb-4 ${confirmation || memberList ? "w-full" : ""}`}>
           
-          {/* Main content area */}
-          <div className="flex gap-6 items-center flex-1 min-w-0">
-            <div className="flex items-center justify-center w-8"><h1 className="font-dongle text-lg">{index+1}.</h1></div>
+          {/* Main content area - now always horizontal */}
+          <div className="flex gap-4 flex-row items-center flex-1 min-w-0">
+            <div className="flex items-center justify-center"><h1 className="font-dongle text-lg">{index+1}.</h1></div>
             <motion.div onClick={() => setActive(card)} layoutId={`image-${card.name}-${id}`} className="flex-shrink-0">
               <img
                 width={100}
                 height={100}
                 src={`${card.avatar}`}
                 alt={card.name}
-                className="h-16 w-16 sm:h-14 sm:w-14 rounded-lg object-cover object-top" />
+                className="h-14 w-14 rounded-lg object-cover object-top" />
             </motion.div>
-            {!confirmation && <img src={`/${card.Rank}.png`} width={50} height={50} alt="" className="flex-shrink-0" />}
+            {!confirmation && <img src={`/${card.Rank}.png`} width={40} height={40} alt="" className="flex-shrink-0" />}
             <div className="font-dongle flex flex-col justify-center flex-1 min-w-0" onClick={() => setActive(card)}>
               <motion.h3
                 layoutId={`title-${card.name}-${id}`}
-                className="font-medium text-neutral-800 dark:text-neutral-200 text-left text-base sm:text-base truncate">
+                className="font-medium text-neutral-800 dark:text-neutral-200 text-left text-base truncate">
                 {card.name} ({card.stage})
               </motion.h3>
               {!confirmation && 
                 <motion.h3
-                  className="font-medium text-neutral-400 dark:text-neutral-200 text-left text-sm sm:text-sm">
+                  className="font-medium text-neutral-400 dark:text-neutral-200 text-left text-sm">
                   {card.Rank}
                 </motion.h3>
               }
             </div>
           </div>
           
-          {/* Actions area */}
-          <div className="flex flex-row items-center gap-4 sm:gap-4">
+          {/* Actions area - now always horizontal */}
+          <div className="flex flex-row items-center gap-4">
             {/* Counter and tick button for !confirmation && memberList */}
             {!confirmation && memberList && (
               <>
                 <div className="flex items-center gap-2">
                   <button 
                     onClick={(e) => decrementPoints(card._id, e)}
-                    className={`w-8 h-8 sm:w-8 sm:h-8 flex items-center cursor-pointer justify-center rounded-full ${pointsCounter[card._id] > 0 ? 'bg-red-100 text-red-600' : 'bg-gray-100 text-gray-400'}`}
+                    className={`w-8 h-8 flex items-center cursor-pointer justify-center rounded-full ${pointsCounter[card._id] > 0 ? 'bg-red-100 text-red-600' : 'bg-gray-100 text-gray-400'}`}
                     disabled={pointsCounter[card._id] <= 0 || processingCards[card._id]}
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-4 sm:w-4" viewBox="0 0 20 20" fill="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
                     </svg>
                   </button>
                   
-                  <div className="w-10 sm:w-10 text-center font-medium text-sm sm:text-sm">
+                  <div className="w-10 text-center font-medium text-sm">
                     {pointsCounter[card._id] || 0}
                   </div>
                   
                   <button 
                     onClick={(e) => incrementPoints(card._id, e)}
-                    className="w-8 h-8 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-green-100 text-green-600"
+                    className="w-8 h-8 flex items-center justify-center rounded-full bg-green-100 text-green-600"
                     disabled={processingCards[card._id]}
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-4 sm:w-4" viewBox="0 0 20 20" fill="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
                     </svg>
                   </button>
@@ -244,14 +244,14 @@ export function TeamCard({cards, onClickAction = null, toDelete = null, confirma
                   }}
                   className={`px-2 py-2 flex-shrink-0 ${processingCards[card._id] ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
                 >
-                  <div className="inline-flex items-center justify-center shrink-0 w-8 h-8 sm:w-8 sm:h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
+                  <div className="inline-flex items-center justify-center shrink-0 w-10 h-10 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
                     {processingCards[card._id] ? (
-                      <svg className="w-4 h-4 sm:w-4 sm:h-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <svg className="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                       </svg>
                     ) : (
-                      <svg className="w-4 h-4 sm:w-4 sm:h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                      <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
                       </svg>
                     )}
@@ -261,7 +261,22 @@ export function TeamCard({cards, onClickAction = null, toDelete = null, confirma
               </>
             )}
             
-            {/* "Add To Club" button - changed to pill shape */}
+            {/* Progress bar for !confirmation && !memberList */}
+            {!confirmation && !memberList && (
+              <div className="w-32 flex flex-col justify-center">
+                <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+                  <div 
+                    className={`bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full`} 
+                    style={{ width: `${Math.round((card.Points / card.totalPoints) * 100)}%` }}
+                  >
+                    {Math.round((card.Points / card.totalPoints) * 100)}%
+                  </div>
+                </div>
+                <h1 className="font-dongle text-xs text-right mt-1 font-semibold">{card.Points}/{card.totalPoints}</h1>
+              </div>
+            )}
+            
+            {/* "Add To Club" button */}
             {confirmation && (
               <div className="flex items-center">
                 <motion.button
@@ -271,7 +286,7 @@ export function TeamCard({cards, onClickAction = null, toDelete = null, confirma
                     }
                   }}
                   disabled={processingCards[card._id]}
-                  className={`px-4 py-2 w-24 sm:w-28 text-sm sm:text-sm rounded-lg font-bold bg-[--primary] text-white ${
+                  className={`px-3 py-2 w-32 text-sm rounded-xl font-bold bg-[--primary] text-white ${
                     processingCards[card._id] ? 'opacity-70 cursor-not-allowed' : 'hover:bg-green-500 cursor-pointer'
                   }`}>
                   {processingCards[card._id] ? (
@@ -280,8 +295,7 @@ export function TeamCard({cards, onClickAction = null, toDelete = null, confirma
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                       </svg>
-                      <span className="hidden sm:inline">Processing...</span>
-                      <span className="sm:hidden">...</span>
+                      Processing...
                     </span>
                   ) : (
                     "Add To Club"
@@ -299,14 +313,14 @@ export function TeamCard({cards, onClickAction = null, toDelete = null, confirma
                   }
                 }}
                 className={`px-2 py-2 flex-shrink-0 ${processingCards[card._id] ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}>
-                <div className="inline-flex items-center justify-center shrink-0 w-8 h-8 sm:w-8 sm:h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
+                <div className="inline-flex items-center justify-center shrink-0 w-10 h-10 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
                   {processingCards[card._id] ? (
-                    <svg className="w-4 h-4 sm:w-4 sm:h-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
                   ) : (
-                    <svg className="w-4 h-4 sm:w-4 sm:h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z"/>
                     </svg>
                   )}
@@ -315,18 +329,6 @@ export function TeamCard({cards, onClickAction = null, toDelete = null, confirma
               </span>
             }
           </div>
-          
-          {!confirmation && !memberList && <div className="w-1/4 mr-10 flex flex-col justify-center">
-            <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
-              <div 
-                className={`bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full`} 
-                style={{ width: `${Math.round((card.Points / card.totalPoints) * 100)}%` }}
-              >
-                {Math.round((card.Points / card.totalPoints) * 100)}%
-              </div>
-            </div>
-            <h1 className="font-dongle text-xs text-right mt-1 font-semibold">{card.Points}/{card.totalPoints}</h1>
-          </div>}
         </motion.div>
       ))}
     </ul>
@@ -365,8 +367,3 @@ export const CloseIcon = () => {
     </motion.svg>)
   );
 };
-
-
-
-
-
