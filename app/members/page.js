@@ -174,8 +174,7 @@ const page = () => {
             localStorage.removeItem('adminAuthExpires');
             setShowAuthModal(true);
         }
-        
-        setIsLoading(false);
+        // Do not toggle members loading state here; it is controlled by fetchMembers
     }, [handleAuthSuccess]);
 
     // Handle form submission
@@ -244,8 +243,9 @@ const page = () => {
     // Loading state
     if (isLoading) {
         return (
-            <div className="flex justify-center items-center min-h-screen">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[--primary]"></div>
+            <div className="flex flex-col gap-4 justify-center items-center min-h-screen px-4 text-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[--primary]" aria-label="Loading members"></div>
+                <p className="text-gray-600 font-dongle text-2xl">Loading members...</p>
             </div>
         );
     }
