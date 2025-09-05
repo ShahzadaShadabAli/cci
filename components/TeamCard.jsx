@@ -174,10 +174,10 @@ export function TeamCard({cards, onClickAction = null, toDelete = null, confirma
         <motion.div
           key={card._id}
           layoutId={`card-${card.name}-${id}`}
-          className={`p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-xl cursor-pointer w-full mb-4 ${confirmation || memberList ? "w-full" : ""}`}>
+          className={`p-4 flex flex-col sm:flex-row justify-between items-center hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-xl cursor-pointer w-full mb-4 ${confirmation || memberList ? "w-full" : ""}`}>
           
           {/* Main content area */}
-          <div className="flex gap-4 flex-col sm:flex-row items-start sm:items-center flex-1 min-w-0">
+          <div className="flex gap-4 flex-col sm:flex-row items-center sm:items-center flex-1 min-w-0">
             <div className="flex items-center justify-center"><h1 className="font-dongle text-lg">{index+1}.</h1></div>
             <motion.div onClick={() => setActive(card)} layoutId={`image-${card.name}-${id}`} className="flex-shrink-0">
               <img
@@ -188,15 +188,15 @@ export function TeamCard({cards, onClickAction = null, toDelete = null, confirma
                 className="h-20 w-20 sm:h-14 sm:w-14 rounded-lg object-cover object-top" />
             </motion.div>
             {!confirmation && <img src={`/${card.Rank}.png`} width={40} height={40} alt="" className="flex-shrink-0" />}
-            <div className="font-dongle flex flex-col justify-center flex-1 min-w-0" onClick={() => setActive(card)}>
+            <div className="font-dongle flex flex-col justify-center flex-1 min-w-0 text-center sm:text-left" onClick={() => setActive(card)}>
               <motion.h3
                 layoutId={`title-${card.name}-${id}`}
-                className="font-medium text-neutral-800 dark:text-neutral-200 text-left text-sm sm:text-base truncate">
+                className="font-medium text-neutral-800 dark:text-neutral-200 text-sm sm:text-base">
                 {card.name} ({card.stage})
               </motion.h3>
               {!confirmation && 
                 <motion.h3
-                  className="font-medium text-neutral-400 dark:text-neutral-200 text-left text-xs sm:text-sm">
+                  className="font-medium text-neutral-400 dark:text-neutral-200 text-xs sm:text-sm">
                   {card.Rank}
                 </motion.h3>
               }
@@ -316,7 +316,7 @@ export function TeamCard({cards, onClickAction = null, toDelete = null, confirma
             }
           </div>
           
-          {!confirmation && !memberList && <div className="w-1/4 mr-10 flex flex-col justify-center">
+          {!confirmation && !memberList && <div className="w-full sm:w-1/4 sm:mr-10 flex flex-col justify-center mt-4 sm:mt-0">
             <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
               <div 
                 className={`bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full`} 
@@ -325,7 +325,7 @@ export function TeamCard({cards, onClickAction = null, toDelete = null, confirma
                 {Math.round((card.Points / card.totalPoints) * 100)}%
               </div>
             </div>
-            <h1 className="font-dongle text-xs text-right mt-1 font-semibold">{card.Points}/{card.totalPoints}</h1>
+            <h1 className="font-dongle text-xs text-center sm:text-right mt-1 font-semibold">{card.Points}/{card.totalPoints}</h1>
           </div>}
         </motion.div>
       ))}
