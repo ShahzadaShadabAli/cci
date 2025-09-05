@@ -272,7 +272,7 @@ export function TeamCard({cards, onClickAction = null, toDelete = null, confirma
                     {Math.round((card.Points / card.totalPoints) * 100)}%
                   </div>
                 </div>
-                <h1 className="font-dongle text-xs text-right mt-1 font-semibold">{card.Points}/{card.totalPoints}</h1>
+                <h1 className="font-dongle text-xs text-center md:text-right mt-1 font-semibold">{card.Points}/{card.totalPoints}</h1>
               </div>
             )}
             
