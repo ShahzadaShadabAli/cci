@@ -2,6 +2,18 @@ import Member from "@/models/member";
 import { connectDB } from "@/app/utils/database";
 import nodemailer from 'nodemailer';
 
+// Normalize a name to Title Case: first letter uppercase for each word, rest lowercase
+// Also trims and collapses multiple spaces
+const toTitleCase = (rawName) => {
+  if (!rawName || typeof rawName !== 'string') return rawName;
+  const collapsed = rawName.trim().replace(/\s+/g, ' ');
+  return collapsed
+    .toLowerCase()
+    .split(' ')
+    .map(segment => segment.charAt(0).toUpperCase() + segment.slice(1))
+    .join(' ');
+};
+
 // Function to generate a random 4-character attendance code
 const generateAttendanceCode = () => {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -84,7 +96,7 @@ export const POST = async (req) => {
         
         // Create new member with attendance code
         const newMember = new Member({
-           name,
+           name: toTitleCase(name),
            avatar,
            stage,
            email,
