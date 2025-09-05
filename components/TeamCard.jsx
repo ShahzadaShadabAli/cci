@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useId, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { useOutsideClick } from "@/hooks/use-outside-click";
 
 
@@ -81,94 +80,61 @@ export function TeamCard({cards, onClickAction = null, toDelete = null, confirma
   useOutsideClick(ref, () => setActive(null));
 
   return (<>
-    <AnimatePresence>
-      {active && typeof active === "object" && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/20 h-full w-full z-10" />
-      )}
-    </AnimatePresence>
-    <AnimatePresence>
-      {active && typeof active === "object" ? (
-        <div className="fixed inset-0  grid place-items-center z-[100]">
-          <motion.button
-            key={`button-${active.title}-${id}`}
-            layout
-            initial={{
-              opacity: 0,
-            }}
-            animate={{
-              opacity: 1,
-            }}
-            exit={{
-              opacity: 0,
-              transition: {
-                duration: 0.05,
-              },
-            }}
-            className="flex absolute top-2 right-2 lg:hidden items-center justify-center bg-white rounded-full h-6 w-6"
-            onClick={() => setActive(null)}>
-            <CloseIcon />
-          </motion.button>
-          <motion.div
-            layoutId={`card-${active.title}-${id}`}
-            ref={ref}
-            className="w-full max-w-[500px]  h-full md:h-fit md:max-h-[90%]  flex flex-col items-center bg-white dark:bg-neutral-900 sm:rounded-3xl overflow-hidden">
-            <motion.div layoutId={`image-${active.title}-${id}`}>
-              <img
-                priority
-                src={`/${active.avatar}`}
-                alt={active.title}
-                className="  sm:rounded-tr-lg sm:rounded-tl-lg object-cover object-top" />
-            </motion.div>
+    {active && typeof active === "object" && (
+      <div className="fixed inset-0 bg-black/20 h-full w-full z-10" />
+    )}
+    {active && typeof active === "object" ? (
+      <div className="fixed inset-0 grid place-items-center z-[100]">
+        <button
+          key={`button-${active.title}-${id}`}
+          className="flex absolute top-2 right-2 lg:hidden items-center justify-center bg-white rounded-full h-6 w-6"
+          onClick={() => setActive(null)}>
+          <CloseIcon />
+        </button>
+        <div
+          ref={ref}
+          className="w-full max-w-[500px] h-full md:h-fit md:max-h-[90%] flex flex-col items-center bg-white dark:bg-neutral-900 sm:rounded-3xl overflow-hidden">
+          <div>
+            <img
+              priority
+              src={`/${active.avatar}`}
+              alt={active.title}
+              className="sm:rounded-tr-lg sm:rounded-tl-lg object-cover object-top" />
+          </div>
 
-            <div className={`flex ${!confirmation ? "pb-6" : ""} justify-center items-center w-full`} >
-              <div>
-              {!confirmation && <img src={`/${active.Rank}.png`} width={55} alt="" />}
+          <div className={`flex ${!confirmation ? "pb-6" : ""} justify-center items-center w-full`} >
+            <div>
+            {!confirmation && <img src={`/${active.Rank}.png`} width={55} alt="" />}
 
+            </div>
+            <div className="flex flex-col gap-2 justify-between items-start p-4">
+              <div className="flex flex-col gap-2 items-center">
+                <h1 className="font-bold text-neutral-700 font-dongle mt-2 text-3xl leading-[1rem] dark:text-neutral-200">
+                  {active.name}
+                </h1>
+               <div className="flex gap-2 justify-between w-full items-center">
+            {!confirmation && <p className="text-neutral-600 text-2xl dark:text-neutral-400 font-dongle">
+                  {active.Rank}
+                </p>}
+               <p className="text-neutral-600 text-2xl dark:text-neutral-400 font-dongle">
+                  {active.stage}
+                </p>
+               </div>
               </div>
-              <div className="flex flex-col gap-2 justify-between items-start p-4">
-                <div className="flex flex-col gap-2 items-center">
-                  <motion.h1
-                    layoutId={`title-${active.title}-${id}`}
-                    className="font-bold text-neutral-700 font-dongle mt-2 text-3xl leading-[1rem] dark:text-neutral-200">
-                    {active.name}
-                  </motion.h1>
-                 <div className="flex gap-2 justify-between w-full items-center">
-              {!confirmation && <motion.p
-                    layoutId={`description-${active.description}-${id}`}
-                    className="text-neutral-600 text-2xl dark:text-neutral-400 font-dongle">
-                    {active.Rank}
-                  </motion.p>}
-                 <motion.p
-                    layoutId={`description-${active.description}-${id}`}
-                    className="text-neutral-600 text-2xl dark:text-neutral-400 font-dongle">
-                    {active.stage}
-                  </motion.p>
-                 </div>
-                </div>
 
-               
-              </div>
-              <div className="pt- relative px-4">
-                <motion.div
-                  layout
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="text-neutral-600 text-xs md:text-sm lg:text-base font-custom h-40 md:h-fit pb-10 flex flex-col items-start gap-4 overflow-auto dark:text-neutral-400 [mask:linear-gradient(to_bottom,white,white,transparent)] [scrollbar-width:none] [-ms-overflow-style:none] [-webkit-overflow-scrolling:touch]">
-                  {typeof active.content === "function"
-                    ? active.content()
-                    : active.content}
-                </motion.div>
+             
+            </div>
+            <div className="pt- relative px-4">
+              <div className="text-neutral-600 text-xs md:text-sm lg:text-base font-custom h-40 md:h-fit pb-10 flex flex-col items-start gap-4 overflow-auto dark:text-neutral-400 [mask:linear-gradient(to_bottom,white,white,transparent)] [scrollbar-width:none] [-ms-overflow-style:none] [-webkit-overflow-scrolling:touch]">
+                {typeof active.content === "function"
+                  ? active.content()
+                  : active.content}
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
-      ) : null}
-    </AnimatePresence>
+      </div>
+    ) : null}
     <ul className={`max-w-2xl mx-auto w-full ${confirmation ? "border-b-2" : ""} ${memberList ? "max-w-4xl" : ""} gap-4`}>
       {cards.map((card, index) => (
         <div
@@ -260,7 +226,7 @@ export function TeamCard({cards, onClickAction = null, toDelete = null, confirma
             {/* "Add To Club" button - changed to pill shape */}
             {confirmation && (
               <div className="flex items-center">
-                <motion.button
+                <button
                   onClick={() => {
                     if (!processingCards[card._id]) {
                       handleClickAction(card);
@@ -282,7 +248,7 @@ export function TeamCard({cards, onClickAction = null, toDelete = null, confirma
                   ) : (
                     "Add To Club"
                   )}
-                </motion.button>
+                </button>
               </div>
             )}
             
@@ -332,19 +298,7 @@ export function TeamCard({cards, onClickAction = null, toDelete = null, confirma
 
 export const CloseIcon = () => {
   return (
-    (<motion.svg
-      initial={{
-        opacity: 0,
-      }}
-      animate={{
-        opacity: 1,
-      }}
-      exit={{
-        opacity: 0,
-        transition: {
-          duration: 0.05,
-        },
-      }}
+    <svg
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
@@ -358,7 +312,7 @@ export const CloseIcon = () => {
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M18 6l-12 12" />
       <path d="M6 6l12 12" />
-    </motion.svg>)
+    </svg>
   );
 };
 
