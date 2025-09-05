@@ -10,6 +10,14 @@ import Cookies from 'js-cookie'
 const page = () => {
     const [members, setMembers] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+    const [hasFetched, setHasFetched] = useState(false)
+    
+    const forceRefreshMembers = () => {
+        console.log('Force refreshing members...')
+        setHasFetched(false)
+        setIsLoading(true)
+        setMembers([])
+    }
     const [deleteModal, setDeleteModal] = useState({ open: false, member: null })
     const [success, setSuccess] = useState("")
     const [showAuthModal, setShowAuthModal] = useState(false);
@@ -29,33 +37,48 @@ const page = () => {
 
     useEffect(() => {
         const fetchMembers = async () => {
+            if (hasFetched) {
+                console.log('Members already fetched, skipping...')
+                return
+            }
+            
             try {
+                console.log('Starting to fetch members...')
                 setIsLoading(true)
                 
                 // Add timeout to prevent stuck loading state
                 const timeoutId = setTimeout(() => {
                     console.warn('Fetch timeout - setting loading to false')
                     setIsLoading(false)
+                    setHasFetched(true)
                 }, 10000) // 10 second timeout
                 
-                const response = await fetch('/api/member', { cache: 'no-store' })
+                const response = await fetch('/api/member', { 
+                    cache: 'no-store',
+                    headers: {
+                        'Cache-Control': 'no-cache'
+                    }
+                })
                 clearTimeout(timeoutId)
                 
                 if (!response.ok) {
-                    throw new Error('Failed to fetch members')
+                    throw new Error(`Failed to fetch members: ${response.status}`)
                 }
                 const data = await response.json()
                 setMembers(data)
-                console.log('Members fetched:', data)
+                setHasFetched(true)
+                console.log('Members fetched successfully:', data.length, 'members')
             } catch (error) {
                 console.error('Error fetching members:', error)
                 setMembers([])
+                setHasFetched(true)
             } finally {
+                console.log('Setting isLoading to false')
                 setIsLoading(false)
             }
         }
         fetchMembers()
-    }, [])
+    }, [hasFetched])
 
     // Fetch meetings
     useEffect(() => {
@@ -257,8 +280,8 @@ const page = () => {
         }
     }
 
-    // Loading state
-    if (isLoading) {
+    // Show loading only when not authenticated and still loading
+    if (!isAuthenticated && isLoading) {
         return (
             <div className="flex flex-col gap-4 justify-center items-center min-h-screen px-4 text-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[--primary]" aria-label="Loading members"></div>
@@ -333,7 +356,18 @@ const page = () => {
             {/* Main content - only visible when authenticated */}
             {isAuthenticated && (
                 <div className="container mx-auto px-4 py-8">
-                    <h1 className="text-3xl font-bold mb-6 font-dongle">Admin Management</h1>
+                    <div className="flex justify-between items-center mb-6">
+                        <h1 className="text-3xl font-bold font-dongle">Admin Management</h1>
+                        <button 
+                            onClick={forceRefreshMembers}
+                            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 flex items-center gap-2"
+                        >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                            Refresh
+                        </button>
+                    </div>
                     
                     {/* Tabs */}
                     <div className="border-b border-gray-200 mb-6">
@@ -364,19 +398,53 @@ const page = () => {
                     {/* Members Management Tab */}
                     {!meetingsTabActive && (
                         <div className="bg-white rounded-lg shadow p-6">
-                            {members && members.length > 0 ? (
-                                <TeamCard 
-                                    cards={members.filter(member => member.type === "Member")} 
-                                    isLoading={isLoading} 
-                                    onClickAction={onClickAction} 
-                                    toDelete={toDelete} 
-                                    memberList={true}
-                                />
-                            ) : !isLoading ? (
-                                <div className="text-center py-8">
-                                    <p className="text-gray-500 font-dongle text-xl">No members found</p>
-                                </div>
-                            ) : null}
+                            {(() => {
+                                console.log('Rendering members tab:', { 
+                                    isLoading, 
+                                    membersLength: members?.length, 
+                                    isAuthenticated, 
+                                    hasFetched,
+                                    membersArray: members 
+                                })
+                                
+                                if (isLoading) {
+                                    return (
+                                        <div className="flex flex-col gap-4 justify-center items-center py-8">
+                                            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[--primary]"></div>
+                                            <p className="text-gray-600 font-dongle text-lg">Loading members...</p>
+                                        </div>
+                                    )
+                                }
+                                
+                                if (members && Array.isArray(members) && members.length > 0) {
+                                    const filteredMembers = members.filter(member => member.type === "Member")
+                                    console.log('Filtered members:', filteredMembers.length)
+                                    return (
+                                        <TeamCard 
+                                            cards={filteredMembers} 
+                                            isLoading={isLoading} 
+                                            onClickAction={onClickAction} 
+                                            toDelete={toDelete} 
+                                            memberList={true}
+                                        />
+                                    )
+                                }
+                                
+                                return (
+                                    <div className="text-center py-8">
+                                        <p className="text-gray-500 font-dongle text-xl">No members found</p>
+                                        <button 
+                                            onClick={() => {
+                                                setHasFetched(false)
+                                                setIsLoading(true)
+                                            }}
+                                            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                                        >
+                                            Retry
+                                        </button>
+                                    </div>
+                                )
+                            })()}
                             
                             {/* Success Toast for Member Deletion */}
                             {success && (
