@@ -59,7 +59,17 @@ const sendWelcomeEmail = async (email, name, attendanceCode) => {
           <p><strong>Important:</strong> Please keep this code secure and bring it to our meetings to mark your attendance.</p>
         </div>
         
-  
+        <div style="border-top: 1px solid #eee; border-bottom: 1px solid #eee; padding: 20px 0; margin: 20px 0;">
+          <p><strong>Join our WhatsApp group:</strong></p>
+          <p>Stay connected with fellow members and get updates about upcoming events, meetings, and announcements.</p>
+          
+          <div style="text-align: center; margin: 15px 0;">
+            <a href="https://chat.whatsapp.com/JCshPDxqmQ22uy7DZvsNSy" 
+               style="display: inline-block; background-color: #25D366; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 16px;">
+              Join WhatsApp Group
+            </a>
+          </div>
+        </div>
         
         <div style="margin-top: 25px; font-size: 14px; color: #7f8c8d;">
           <p>If you have any questions or need assistance, please don't hesitate to contact us by replying to this email.</p>
