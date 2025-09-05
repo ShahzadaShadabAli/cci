@@ -29,12 +29,30 @@ const page = () => {
 
     useEffect(() => {
         const fetchMembers = async () => {
-            setIsLoading(true)
-            const response = await fetch('/api/member', { cache: 'no-store' })
-            const data = await response.json()
-            setMembers(data)
-            setIsLoading(false)
-            console.log(data)
+            try {
+                setIsLoading(true)
+                
+                // Add timeout to prevent stuck loading state
+                const timeoutId = setTimeout(() => {
+                    console.warn('Fetch timeout - setting loading to false')
+                    setIsLoading(false)
+                }, 10000) // 10 second timeout
+                
+                const response = await fetch('/api/member', { cache: 'no-store' })
+                clearTimeout(timeoutId)
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch members')
+                }
+                const data = await response.json()
+                setMembers(data)
+                console.log('Members fetched:', data)
+            } catch (error) {
+                console.error('Error fetching members:', error)
+                setMembers([])
+            } finally {
+                setIsLoading(false)
+            }
         }
         fetchMembers()
     }, [])
@@ -346,7 +364,7 @@ const page = () => {
                     {/* Members Management Tab */}
                     {!meetingsTabActive && (
                         <div className="bg-white rounded-lg shadow p-6">
-                            {members.length > 0 && (
+                            {members && members.length > 0 ? (
                                 <TeamCard 
                                     cards={members.filter(member => member.type === "Member")} 
                                     isLoading={isLoading} 
@@ -354,7 +372,11 @@ const page = () => {
                                     toDelete={toDelete} 
                                     memberList={true}
                                 />
-                            )}
+                            ) : !isLoading ? (
+                                <div className="text-center py-8">
+                                    <p className="text-gray-500 font-dongle text-xl">No members found</p>
+                                </div>
+                            ) : null}
                             
                             {/* Success Toast for Member Deletion */}
                             {success && (
