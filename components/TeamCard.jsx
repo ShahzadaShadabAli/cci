@@ -171,40 +171,40 @@ export function TeamCard({cards, onClickAction = null, toDelete = null, confirma
     </AnimatePresence>
     <ul className={`max-w-2xl mx-auto w-full ${confirmation ? "border-b-2" : ""} ${memberList ? "max-w-4xl" : ""} gap-4`}>
       {cards.map((card, index) => (
-        <div key={card._id} className="flex flex-col sm:flex-row justify-between items-start sm:items-center w-full mb-4">
-          <motion.div
-            layoutId={`card-${card.name}-${id}`}
-            key={`card-${card.name}-${id}`}
-            className={`p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-xl cursor-pointer ${confirmation || memberList ? "w-full" : ""}`}>
-            <div className="flex gap-4 flex-col sm:flex-row items-start sm:items-center w-full">
-              <div className="flex items-center justify-center"><h1 className="font-dongle text-lg">{index+1}.</h1></div>
-              <motion.div onClick={() => setActive(card)} layoutId={`image-${card.name}-${id}`} className="flex-shrink-0">
-                <img
-                  width={100}
-                  height={100}
-                  src={`${card.avatar}`}
-                  alt={card.name}
-                  className="h-20 w-20 sm:h-14 sm:w-14 rounded-lg object-cover object-top" />
-              </motion.div>
-              {!confirmation && <img src={`/${card.Rank}.png`} width={40} height={40} alt="" className="flex-shrink-0" />}
-              <div className="font-dongle flex flex-col justify-center flex-1 min-w-0" onClick={() => setActive(card)}>
-                <motion.h3
-                  layoutId={`title-${card.name}-${id}`}
-                  className="font-medium text-neutral-800 dark:text-neutral-200 text-left text-sm sm:text-base truncate">
-                  {card.name} ({card.stage})
-                </motion.h3>
-                {!confirmation && 
-                  <motion.h3
-                    className="font-medium text-neutral-400 dark:text-neutral-200 text-left text-xs sm:text-sm">
-                    {card.Rank}
-                  </motion.h3>
-                }
-              </div>
-            </div>
-          </motion.div>
+        <motion.div
+          key={card._id}
+          layoutId={`card-${card.name}-${id}`}
+          className={`p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-xl cursor-pointer w-full mb-4 ${confirmation || memberList ? "w-full" : ""}`}>
           
-          {/* Position counter and actions outside the motion.div but inside the parent div */}
-          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 mt-2 sm:mt-0 sm:ml-auto">
+          {/* Main content area */}
+          <div className="flex gap-4 flex-col sm:flex-row items-start sm:items-center flex-1 min-w-0">
+            <div className="flex items-center justify-center"><h1 className="font-dongle text-lg">{index+1}.</h1></div>
+            <motion.div onClick={() => setActive(card)} layoutId={`image-${card.name}-${id}`} className="flex-shrink-0">
+              <img
+                width={100}
+                height={100}
+                src={`${card.avatar}`}
+                alt={card.name}
+                className="h-20 w-20 sm:h-14 sm:w-14 rounded-lg object-cover object-top" />
+            </motion.div>
+            {!confirmation && <img src={`/${card.Rank}.png`} width={40} height={40} alt="" className="flex-shrink-0" />}
+            <div className="font-dongle flex flex-col justify-center flex-1 min-w-0" onClick={() => setActive(card)}>
+              <motion.h3
+                layoutId={`title-${card.name}-${id}`}
+                className="font-medium text-neutral-800 dark:text-neutral-200 text-left text-sm sm:text-base truncate">
+                {card.name} ({card.stage})
+              </motion.h3>
+              {!confirmation && 
+                <motion.h3
+                  className="font-medium text-neutral-400 dark:text-neutral-200 text-left text-xs sm:text-sm">
+                  {card.Rank}
+                </motion.h3>
+              }
+            </div>
+          </div>
+          
+          {/* Actions area */}
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 mt-2 sm:mt-0">
             {/* Counter and tick button for !confirmation && memberList */}
             {!confirmation && memberList && (
               <>
@@ -327,7 +327,7 @@ export function TeamCard({cards, onClickAction = null, toDelete = null, confirma
             </div>
             <h1 className="font-dongle text-xs text-right mt-1 font-semibold">{card.Points}/{card.totalPoints}</h1>
           </div>}
-        </div>
+        </motion.div>
       ))}
     </ul>
   
