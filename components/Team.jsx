@@ -126,23 +126,40 @@ const Team = () => {
       </div>
 
     {/* Links section before footer */}
-    <div className="flex justify-center gap-6 py-10">
+    <div className="py-10">
+      <h1 className="font-dongle text-[4vw] max-md:text-[6vw] text-[--primary] pb-4 font-bold text-center">
+        Utilities
+      </h1>
+      <div className="flex justify-center gap-6">
       <a
         href="https://power-like-93vd.pagedrop.io"
         target="_blank"
         rel="noopener noreferrer"
-        className="px-6 py-3 rounded-md border border-[--primary] text-[--primary] transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.03] hover:bg-[--primary] hover:text-white shadow-sm"
+        className="oauthButton"
       >
-        components page
+        <div className="flex items-center justify-center">
+          <span>components page</span>
+          <svg className="icon ml-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="m6 17 5-5-5-5"></path>
+            <path d="m13 17 5-5-5-5"></path>
+          </svg>
+        </div>
       </a>
       <a
         href="https://pagedrop.io/"
         target="_blank"
         rel="noopener noreferrer"
-        className="px-6 py-3 rounded-md border border-[--primary] text-[--primary] transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.03] hover:bg-[--primary] hover:text-white shadow-sm"
+        className="oauthButton"
       >
-        deployment app
+        <div className="flex items-center justify-center">
+          <span>deployment app</span>
+          <svg className="icon ml-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="m6 17 5-5-5-5"></path>
+            <path d="m13 17 5-5-5-5"></path>
+          </svg>
+        </div>
       </a>
+      </div>
     </div>
     </div>
   );
