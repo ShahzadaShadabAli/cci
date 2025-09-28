@@ -92,7 +92,7 @@ const Team = () => {
         href="https://power-like-93vd.pagedrop.io"
         target="_blank"
         rel="noopener noreferrer"
-        className="px-6 py-3 rounded-md border border-[--primary] text-[--primary] transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.03] hover:bg-[--primary] hover:text-black shadow-sm"
+        className="px-6 py-3 rounded-md border border-[--primary] text-[--primary] transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.03] hover:bg-[--primary] hover:text-white shadow-sm"
       >
         components page
       </a>
@@ -100,7 +100,7 @@ const Team = () => {
         href="https://pagedrop.io/"
         target="_blank"
         rel="noopener noreferrer"
-        className="px-6 py-3 rounded-md border border-[--primary] text-[--primary] transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.03] hover:bg-[--primary] hover:text-black shadow-sm"
+        className="px-6 py-3 rounded-md border border-[--primary] text-[--primary] transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.03] hover:bg-[--primary] hover:text-white shadow-sm"
       >
         deployment app
       </a>
