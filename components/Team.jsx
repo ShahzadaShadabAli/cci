@@ -7,6 +7,7 @@ import members from '@/data/team.json';
 const Team = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [members, setMembers] = useState(null)
+  const [showAllMembers, setShowAllMembers] = useState(false)
 
     const fetchMembers = async () =>{
         setIsLoading(true)
@@ -24,6 +25,12 @@ const Team = () => {
   useEffect(() => {
     fetchMembers()
   }, [])
+
+  // Prepare member list for frontend-only limiting
+  const memberList = members ? members.filter(m => {
+    const t = (m.type || '').toLowerCase();
+    return t ? t === 'member' : m.isMember === true;
+  }) : [];
 
   return (
     <div
@@ -77,11 +84,18 @@ const Team = () => {
         <div className="w-1/2">
           {members && (
             <TeamCard 
-              cards={members.filter(m => {
-                const t = (m.type || '').toLowerCase();
-                return t ? t === 'member' : m.isMember === true;
-              })} 
+              cards={showAllMembers ? memberList : memberList.slice(0, 5)} 
             />
+          )}
+          {members && memberList.length > 5 && !showAllMembers && (
+            <div className="flex justify-center pt-4">
+              <button
+                onClick={() => setShowAllMembers(true)}
+                className="px-5 py-2 rounded-md border border-[--primary] text-[--primary] transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.03] hover:bg-[--primary] hover:text-white shadow-sm"
+              >
+                Show more
+              </button>
+            </div>
           )}
         </div>
       </div>
