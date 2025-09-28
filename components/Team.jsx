@@ -8,6 +8,7 @@ const Team = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [members, setMembers] = useState(null)
   const [showAllMembers, setShowAllMembers] = useState(false)
+  const [memberSearch, setMemberSearch] = useState("")
 
     const fetchMembers = async () =>{
         setIsLoading(true)
@@ -31,6 +32,16 @@ const Team = () => {
     const t = (m.type || '').toLowerCase();
     return t ? t === 'member' : m.isMember === true;
   }) : [];
+
+  // Flexible, case-insensitive search across full name
+  const normalizedQuery = memberSearch.trim().toLowerCase();
+  const queryTokens = normalizedQuery.length > 0 ? normalizedQuery.split(/\s+/) : [];
+  const filteredMembers = queryTokens.length === 0
+    ? memberList
+    : memberList.filter(m => {
+        const name = String(m.name || "").toLowerCase();
+        return queryTokens.every(token => name.includes(token));
+      });
 
   return (
     <div
@@ -82,12 +93,26 @@ const Team = () => {
           </h1>
         </div>
         <div className="w-1/2">
+          {/* Tiny search bar */}
+          {members && (
+            <div className="mb-3 flex justify-end">
+              <input
+                type="text"
+                value={memberSearch}
+                onChange={(e) => { setMemberSearch(e.target.value); setShowAllMembers(false); }}
+                aria-label="Search members"
+                placeholder="Search members..."
+                className="w-full max-w-xs px-3 py-1.5 text-sm rounded-md border border-[--primary] outline-none focus:ring-2 focus:ring-[--primary] bg-transparent text-[--primary] placeholder-gray-400"
+              />
+            </div>
+          )}
+
           {members && (
             <TeamCard 
-              cards={showAllMembers ? memberList : memberList.slice(0, 5)} 
+              cards={showAllMembers ? filteredMembers : filteredMembers.slice(0, 5)} 
             />
           )}
-          {members && memberList.length > 5 && !showAllMembers && (
+          {members && filteredMembers.length > 5 && !showAllMembers && (
             <div className="flex justify-center pt-4">
               <button
                 onClick={() => setShowAllMembers(true)}
