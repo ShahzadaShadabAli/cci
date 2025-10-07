@@ -178,7 +178,7 @@ const MeetingsForm = () => {
                     formData.append('gallery', file);
                 });
             }
-            console.log("formData", formData)
+            console.log(thumbnail)
             const response = await fetch('/api/meeting/update', {
                 method: 'POST',
                 body: formData,
