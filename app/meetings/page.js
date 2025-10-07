@@ -149,58 +149,77 @@ const MeetingsForm = () => {
 
     // Update an existing meeting with images
     const updateExistingMeeting = async () => {
+        console.log("=== UPDATE MEETING START ===");
+        console.log("Selected Meeting:", selectedMeeting);
+        console.log("Thumbnail:", thumbnail);
+        console.log("Gallery length:", gallery.length);
+        
         if (!selectedMeeting) {
             setErr('Please select a meeting to update');
             return;
         }
-        
+                 
         if (!thumbnail && gallery.length === 0) {
             setErr('Please select at least one image to upload');
             return;
         }
-        
+                 
         setLoading(true);
         setErr('');
-        
+                 
         try {
             // Create FormData to handle file uploads
             const formData = new FormData();
             formData.append('meetingId', selectedMeeting);
-            
+                         
             // Only append thumbnail if it exists
             if (thumbnail) {
                 formData.append('thumbnail', thumbnail);
+                console.log("Thumbnail appended:", thumbnail.name, thumbnail.size);
             }
-            
+                         
             // Only append gallery images if they exist
             if (gallery.length > 0) {
-                gallery.forEach((file) => {
+                gallery.forEach((file, index) => {
                     formData.append('gallery', file);
+                    console.log(`Gallery[${index}] appended:`, file.name, file.size);
                 });
             }
+            
+            console.log("FormData prepared, sending request to /api/meeting/update");
             console.log(thumbnail)
+            
             const response = await fetch('/api/meeting/update', {
                 method: 'POST',
                 body: formData,
             });
             
+            console.log("Response received:");
+            console.log("Status:", response.status);
+            console.log("OK:", response.ok);
+                         
             const data = await response.json();
-            
+            console.log("Response data:", data);
+                         
             if (!response.ok) {
                 throw new Error(data.message || 'Something went wrong');
             }
-            
+                         
             // Reset form fields
             setSelectedMeeting('');
             setThumbnail(null);
             setGallery([]);
             setThumbnailPreview('');
             setGalleryPreviews([]);
-            
+                         
             setSuccess(true);
-            
+            console.log("=== UPDATE MEETING SUCCESS ===");
+                     
         } catch (error) {
-            console.error('Error updating meeting:', error);
+            console.error('=== UPDATE MEETING ERROR ===');
+            console.error('Error type:', error.constructor.name);
+            console.error('Error message:', error.message);
+            console.error('Error stack:', error.stack);
             setErr(error.message || 'Failed to update meeting');
         } finally {
             setLoading(false);
