@@ -36,6 +36,7 @@ async function saveFile(file) {
 
 export async function POST(req) {
   try {
+    console.log("first try")
     // Connect to database
     await connectDB();
 
@@ -105,6 +106,7 @@ export async function POST(req) {
     }, { status: 200 });
 
   } catch (error) {
+    console.log(error)
     console.error("Error updating meeting:", error);
     return NextResponse.json(
       { message: "Failed to update meeting", error: error.message },
