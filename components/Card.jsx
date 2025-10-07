@@ -17,7 +17,7 @@ export function Card({ id, title, description, thumbnail }) {
         <CardItem
           as="p"
           translateZ="60"
-          className="text-neutral-500 font-custom text-sm max-w-sm mt-2 text-[--secondary-light] dark:text-neutral-300">
+          className="text-neutral-500 font-custom text-sm max-w-sm mt-2 text-[--secondary] dark:text-neutral-300">
           {description?.substring(0, 100) + (description?.length > 100 ? "..." : "") || 
             "Hover over this card to unleash the power of CSS perspective"}
         </CardItem>
