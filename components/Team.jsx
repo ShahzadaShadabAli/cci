@@ -132,7 +132,7 @@ const Team = () => {
       </h1>
       <div className="flex justify-center gap-6">
       <a
-        href="https://power-like-93vd.pagedrop.io"
+        href="https://cci-programming-club.pagedrop.io"
         target="_blank"
         rel="noopener noreferrer"
         className="oauthButton"
