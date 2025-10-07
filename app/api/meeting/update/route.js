@@ -35,6 +35,7 @@ async function saveFile(file) {
 }
 
 export async function POST(req) {
+  console.log("first try")
   try {
     console.log("first try")
     // Connect to database
