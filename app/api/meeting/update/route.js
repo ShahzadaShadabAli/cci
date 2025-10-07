@@ -69,6 +69,7 @@ export async function POST(req) {
     if (thumbnailFile && thumbnailFile.size > 0) {
       const thumbnailUrl = await saveFile(thumbnailFile);
       meeting.thumbnail = thumbnailUrl;
+      console.log("thumbnailUrl", thumbnailUrl);
     }
 
     if (galleryFiles && galleryFiles.length > 0) {
